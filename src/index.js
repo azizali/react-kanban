@@ -72,6 +72,18 @@ class App extends React.Component {
     this.handleMove = this.handleMove.bind(this);
   }
 
+  handleEdit = (colIndex, cardIndex) => {
+    const { task } = this.state.columns[colIndex].cards[cardIndex]
+    const input = prompt('Please change the task', task);
+
+    if (input && input !== task) {
+      const nextState = produce(this.state, (draft) => {
+        draft.columns[colIndex].cards[cardIndex].task = input
+      })
+      this.setState(() => nextState)
+    }
+  }
+
   handleClick(colIndex) {
 
     const input = prompt('Please enter task');
@@ -127,6 +139,7 @@ class App extends React.Component {
                       moveRightCb={() => {
                         this.handleMove(columnIndex + 1, columnIndex, cardIndex);
                       }}
+                      editCardCb={() => { this.handleEdit(columnIndex, cardIndex) }}
                       task={task}
                     />
                   );
