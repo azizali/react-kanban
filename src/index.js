@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import Column from './Column';
 import Card from './Card';
 import AddBtn from './AddBtn';
+import produce from 'immer';
 
 class App extends React.Component {
   constructor(props) {
@@ -72,30 +73,30 @@ class App extends React.Component {
   }
 
   handleClick(colIndex) {
-    const column = this.state.columns[colIndex];
 
     const input = prompt('Please enter task');
 
     if (input) {
-      column.cards.push({
-        task: input
-      });
+      const nextState = produce(this.state, (draft) => {
+        const column = draft.columns[colIndex];
+        column.cards.push({
+          task: input
+        });
 
-      this.state.columns[colIndex] = column;
+      })
 
-      this.setState({
-        columns: this.state.columns
-      });
+      this.setState(() => nextState);
     }
   }
 
   handleMove(destColumn, currentCol, cardIndex) {
-    const card = this.state.columns[currentCol].cards.splice(cardIndex, 1)[0];
-    this.state.columns[destColumn].cards.push(card);
+    const nextState = produce(this.state, (draft) => {
+      const card = draft.columns[currentCol].cards.splice(cardIndex, 1)[0];
+      draft.columns[destColumn].cards.push(card);
 
-    this.setState({
-      columns: this.state.columns
-    });
+    })
+
+    this.setState(() => nextState);
   }
 
   render() {

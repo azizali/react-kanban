@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function({ task, moveLeftCb, moveRightCb, leftEnabled, rightEnabled }) {
+export default function Card({ task, moveLeftCb, moveRightCb, leftEnabled, rightEnabled }) {
   return (
     <div className="border d-flex justify-content-between p-2 bg-white">
       {
