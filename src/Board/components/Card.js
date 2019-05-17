@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default function Card({ task, moveLeftCb, moveRightCb, leftEnabled, rightEnabled, editCardCb }) {
+export default function Card({ task, moveLeftCb, moveRightCb, isFirstColumn, isLastColumn, editCardCb }) {
   return (
     <div
       onDoubleClick={editCardCb}
       className="border d-flex justify-content-between p-2 bg-white">
       {
-        leftEnabled
+        isFirstColumn
         &&
         <button
           className="btn btn-light strong"
@@ -16,7 +16,7 @@ export default function Card({ task, moveLeftCb, moveRightCb, leftEnabled, right
       }
       <div className="flex-grow-1 text-center">{task}</div>
       {
-        rightEnabled
+        isLastColumn
         &&
         <button
           className="btn btn-light strong"

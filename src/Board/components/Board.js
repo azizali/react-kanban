@@ -2,6 +2,7 @@ import React from 'react'
 import produce from 'immer'
 
 import columnsData from '../columnsData'
+import Header from './Header'
 import Column from './Column'
 import Card from './Card'
 import AddBtn from './AddBtn'
@@ -59,13 +60,7 @@ export default class Board extends React.Component {
     const columnSize = columns.length
     return (
       <div className="container mt-4">
-        <div className="row text-center">
-          <div className="col">
-            <h1>Kanban Board</h1>
-            <p className="lead">Perfect way to stay organized</p>
-            <hr />
-          </div>
-        </div>
+        <Header />
         <div className="row">
           {columns.map(({ name, color, cards }, columnIndex) => {
             return (
@@ -74,8 +69,8 @@ export default class Board extends React.Component {
                   return (
                     <Card
                       key={cardIndex}
-                      leftEnabled={columnIndex !== 0 ? true : false}
-                      rightEnabled={columnIndex < columnSize - 1 ? true : false}
+                      isFirstColumn={columnIndex !== 0 ? true : false}
+                      isLastColumn={columnIndex < columnSize - 1 ? true : false}
                       moveLeftCb={() => {
                         this.handleMove(columnIndex - 1, columnIndex, cardIndex)
                       }}
