@@ -1,8 +1,10 @@
 import React from 'react';
 
-export default function({ task, moveLeftCb, moveRightCb, leftEnabled, rightEnabled }) {
+export default function({ task, moveLeftCb, moveRightCb, leftEnabled, rightEnabled, editCardCb }) {
   return (
-    <div className="border d-flex justify-content-between p-2 bg-white">
+    <div 
+      onDoubleClick={editCardCb}
+      className="border d-flex justify-content-between p-2 bg-white">
       {
         leftEnabled
         &&

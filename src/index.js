@@ -88,6 +88,31 @@ class App extends React.Component{
     })
   }
 
+  handleMove = (columnIndex, cardIndex, destinationColumnIndex)=>{
+    const newColumns = produce(this.state.columns, (draftColumns)=>{
+      const currentCard = draftColumns[columnIndex].cards[cardIndex]
+      draftColumns[destinationColumnIndex].cards.push(currentCard)
+      draftColumns[columnIndex].cards.splice(cardIndex, 1) // Delete item from an array
+    })
+
+    this.setState({
+      columns: newColumns
+    })
+  }
+
+  editCard = (columnIndex, cardIndex, task)=>{
+    console.log('i was clciked twice')
+    const input = prompt('Enter task here:', task);
+    console.log('input', input)
+    if(input){
+      this.setState({
+        columns: produce(this.state.columns, (draftColumns)=>{
+          draftColumns[columnIndex].cards[cardIndex].task = input
+        })
+      })
+    }
+  }
+
   render(){
     const { columns } = this.state;
     const columnSize = columns.length;
@@ -110,6 +135,9 @@ class App extends React.Component{
                       key={cardIndex}
                       leftEnabled={columnIndex !== 0 ? true : false}
                       rightEnabled={columnIndex < columnSize - 1 ? true : false}
+                      moveRightCb={()=> this.handleMove(columnIndex, cardIndex, columnIndex+1)}
+                      moveLeftCb={()=> this.handleMove(columnIndex, cardIndex, columnIndex-1)}
+                      editCardCb={()=> this.editCard(columnIndex, cardIndex, task)}
                       task={task}
                     />
                   );
